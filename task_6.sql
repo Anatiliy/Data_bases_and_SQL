@@ -59,24 +59,23 @@ CALL get_time
 	(1, @procedure_result);
 SELECT @procedure_result;
 
-
 DROP PROCEDURE IF EXISTS print_numbers;
 DELIMITER //
 CREATE PROCEDURE print_numbers
 (
-	IN input_numbers INT -- N 
+	IN input_numbers INT
 )
 BEGIN
 	DECLARE n INT;
     DECLARE result VARCHAR(45) DEFAULT "";
-    SET n = input_numbers;
+    SET n = 0;
 
 	REPEAT
-		SET result = CONCAT(result, n, ",");
-        SET n = n - 1;
-        UNTIL n <= 0 -- Условие выхода из цикла: когда n - отрицательное или равно 0
+		SET n = n + 2;
+        SET result = CONCAT(result, n, ",");
+        UNTIL n > input_numbers - 2 -- Условие выхода из цикла: когда n больше введёного числа
 	END REPEAT;
 	SELECT result;
 END //
 
-CALL print_numbers(4);
+CALL print_numbers(10);
