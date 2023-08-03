@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS user_statistic
 
 -- 4. Заполнение таблицы данными
 INSERT user_statistic(session_duration)
-VALUES # 3 столбца = 3 значения 
+VALUES 
 	(2345345), -- id = 1
     (6733673), -- id = 2
 	(657456), -- id = 3
@@ -24,12 +24,6 @@ VALUES # 3 столбца = 3 значения
 
 SELECT * FROM user_statistic;
 
--- Создадим процедуру , которая будет выводить статус сотрудника по ЗП:
--- от 0 до 49 999 вкл-но, то это "Средняя ЗП" 
--- от 50 000 до 69 999 вкл-но, то это "ЗП выше средней"
--- ЗП > 70 000 , то "Высокая ЗП"
-
--- Номер сотрудника (id), статус сотрудника в отдельную переменную - итог 
 DROP PROCEDURE IF EXISTS get_time;
 DELIMITER $$ -- Начало процедуры для сервера , "$$" - символ - разделитель, как ";"
 CREATE PROCEDURE get_time
@@ -54,7 +48,7 @@ BEGIN
     SET second_time = (((unformatted_time % 86400) % 3600) % 60);
     SET formatted_time = CONCAT(day_time, " дней, ", hour_time, " часов, ", minute_time, " минут, ", second_time, " секунд.");END $$
 DELIMITER ;
--- '$$ -- Конец процедуры, причем, для сервера' at line 23	0.000 sec
+-- '$$ -- Конец процедуры, причем, для сервера
 CALL get_time
 	(1, @procedure_result);
 SELECT @procedure_result;
